@@ -11,6 +11,8 @@ class FlashCard extends StatefulWidget {
   State<FlashCard> createState() => _FlashCardState();
 }
 
+// A flash card that can be flipped when the user taps on it.
+// To determine its dimensions, put it inside a parent container with the width and height you want.
 class _FlashCardState extends State<FlashCard> {
   String frontText = 'Front text';
   String backText = 'Back text';
