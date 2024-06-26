@@ -13,15 +13,19 @@ class CardPanel extends StatefulWidget {
 // A flash card that can be flipped when the user taps on it.
 // To determine its dimensions, put it inside a parent container with the width and height you want.
 class _CardPanelState extends State<CardPanel> {
+  
   String frontText = '';
   String backText = '';
   bool frontFacing = true;
 
-  void init() {
-    setState(() {
+  @override
+  void initState() {
+    super.initState();
+    debugPrint('received card: ${widget.card}');
+    // setState(() {
       frontText = widget.card.front;
       backText = widget.card.back;
-    });
+    // });
   }
 
   void flip() {
