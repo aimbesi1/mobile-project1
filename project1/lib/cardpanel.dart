@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:project1/flashcard.dart';
+import 'package:project1/main.dart';
 
 class CardPanel extends StatefulWidget {
-  final FlashCard card;
+  FlashCard card;
+  final bool canEdit;
+  final VoidCallback onDelete;
 
-  const CardPanel({super.key, required this.card});
+ CardPanel({Key? key, required this.card, required this.onDelete, this.canEdit = true})
+      : super(key: key ?? ValueKey(card.id));
 
   @override
   State<CardPanel> createState() => _CardPanelState();
@@ -18,6 +22,8 @@ class _CardPanelState extends State<CardPanel> {
   String backText = '';
   bool frontFacing = true;
 
+  TextEditingController _editTextController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -28,10 +34,118 @@ class _CardPanelState extends State<CardPanel> {
     // });
   }
 
+  Future<void> updateText(String text) async {
+    if (frontFacing) {
+      widget.card.front = text;
+    }
+    else {
+      widget.card.back = text;
+    }
+    await dbHelper.updateCard(widget.card);
+    setState(() {
+      frontText = widget.card.front;
+      backText = widget.card.back;
+    });
+  }
+
+  Future<void> deleteCard() async {
+    await dbHelper.deleteCard(widget.card.id!);
+    widget.onDelete();
+    // widget.card = await dbHelper.getCard(widget.card.id!);
+    setState(() {
+      frontFacing = true;
+      frontText = widget.card.front;
+      backText = widget.card.back;
+    });
+  }
+
   void flip() {
     setState(() {
       frontFacing = !frontFacing;
     });
+  }
+
+  void editCard() {
+    //Builds dialog box for editing or deleting sets
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text('Edit or Delete Set', textAlign: TextAlign.center),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+
+              //Text Field
+              TextField(
+                controller: _editTextController,
+                decoration: InputDecoration(
+                  hintText: frontFacing ? frontText : backText,
+                ),
+              ),
+
+              ButtonBar(
+                alignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+
+                  //Edit Button
+                  ElevatedButton(
+                    onPressed: () {
+                      if(_editTextController.text.isNotEmpty) {
+                          updateText(_editTextController.text);
+                      }
+                      setState(() {
+                        _editTextController.clear();
+                        Navigator.of(context).pop();
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                      foregroundColor: Colors.white,
+                    ),
+                    child: const Text('Edit'),
+                  ),
+
+                  //Delete Button
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        deleteCard();
+                        _editTextController.clear();
+                        Navigator.of(context).pop();
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                      foregroundColor: Colors.white,
+                    ),
+                    child: const Text('Delete'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          actions: <Widget>[
+            //Cancel Button
+            ElevatedButton(
+              onPressed: () {
+                _editTextController.clear();
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+                foregroundColor: Colors.white,
+              ),
+              child: const Center(
+                child: Text('Cancel', textAlign: TextAlign.center),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -41,6 +155,11 @@ class _CardPanelState extends State<CardPanel> {
           setState(() {
             flip();
           });
+        },
+        onLongPress: () {
+          if (widget.canEdit) {
+            editCard();
+          }
         },
         child: frontFacing
             ? Container(

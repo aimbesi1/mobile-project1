@@ -1,7 +1,7 @@
 class FlashCard {
   final int? id;
-  final String front;
-  final String back;
+  String front;
+  String back;
   final int? setId;
 
   FlashCard({

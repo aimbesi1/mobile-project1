@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
+import 'package:project1/cardset.dart';
 import 'package:project1/flashcard.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -71,14 +72,18 @@ class DatabaseHelper {
   // Inserts a row in the database where each key in the Map is a column name
   // and the value is the column value. The return value is the id of the
   // inserted row.
-  Future<int> insertCardSet(Map<String, dynamic> row) async {
-    return await _db.insert(setsTable, row);
+  Future<int> insertCardSet(CardSet set) async {
+    return await _db.insert(setsTable, set.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   // All of the rows are returned as a list of maps, where each map is
   // a key-value list of columns.
-  Future<List<Map<String, dynamic>>> queryAllSets() async {
-    return await _db.query(setsTable);
+  Future<List<CardSet>> queryAllSets() async {
+    final List<Map<String, dynamic>> maps = await _db.query(setsTable);
+    return List.generate(maps.length, (i) {
+      return CardSet(
+          id: maps[i]['_sid'], name: maps[i]['name']);
+    });
   }
 
   // All of the methods (insert, query, update, delete) can also be done using
@@ -111,6 +116,18 @@ class DatabaseHelper {
     });
   }
 
+  Future<FlashCard> getCard(int id) async {
+    final List<Map<String, dynamic>> maps = await _db.query(
+      cardsTable,
+      where: '$columnCardId = ?',
+      whereArgs: [id],
+      limit: 1
+    );
+
+    return FlashCard(
+          id: maps[0]['_cid'], front: maps[0]['front'], back: maps[0]['back'], setId: maps[0]['sid']);
+  }
+
   // We are assuming here that the id column in the map is set. The other
   // column values will be used to update the row.
   Future<int> updateCard(FlashCard card) async {
@@ -123,12 +140,30 @@ class DatabaseHelper {
     );
   }
 
+  Future<int> renameSet(CardSet set) async {
+    int id = set.id!;
+    return await _db.update(
+      setsTable,
+      set.toMap(),
+      where: '$columnSetId = ?',
+      whereArgs: [id],
+    );
+  }
+
   // Deletes the row specified by the id. The number of affected rows is
   // returned. This should be 1 as long as the row exists.
   Future<int> deleteCard(int id) async {
     return await _db.delete(
       cardsTable,
       where: '$columnCardId = ?',
+      whereArgs: [id],
+    );
+  }
+
+  Future<int> deleteSet(int id) async {
+    return await _db.delete(
+      setsTable,
+      where: '$columnSetId = ?',
       whereArgs: [id],
     );
   }
