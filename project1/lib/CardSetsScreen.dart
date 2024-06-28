@@ -100,9 +100,8 @@ class _CardSetsPageState extends State<CardSetsPage> {
                   //Delete Button
                   ElevatedButton(
                     onPressed: () {
-                      deleteSet(index);
+                      deleteSet(_sets[index].id!);
                       setState(() {
-                        // _sets.removeAt(index);
                         _editTextController.clear();
                         Navigator.of(context).pop();
                       });

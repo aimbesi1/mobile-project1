@@ -57,9 +57,9 @@ class _CardsViewState extends State<CardsView> {
   }
 
   void queryCards() async {
-    // final cards = await dbHelper.queryAllCardsOfSet(1);
+    final cards = await dbHelper.queryAllCardsOfSet(6);
     debugPrint('query all cards:');
-    for (final row in _cards) {
+    for (final row in cards) {
       debugPrint(row.toString());
     }
   }

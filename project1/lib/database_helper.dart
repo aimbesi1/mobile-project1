@@ -160,8 +160,14 @@ class DatabaseHelper {
     );
   }
 
+  // Returns the number of cards + sets deleted
   Future<int> deleteSet(int id) async {
-    return await _db.delete(
+    int cards = await _db.delete(
+      cardsTable,
+      where: '$columnSetKey = ?',
+      whereArgs: [id]
+    );
+    return cards + await _db.delete(
       setsTable,
       where: '$columnSetId = ?',
       whereArgs: [id],
