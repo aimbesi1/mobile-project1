@@ -35,6 +35,8 @@ class DatabaseHelper {
       version: _databaseVersion,
       onCreate: _onCreate,
     );
+
+    await _createStartingCards();
   }
 
   // SQL code to create the database table
@@ -55,6 +57,19 @@ class DatabaseHelper {
         FOREIGN KEY ($columnSetKey) REFERENCES $setsTable($columnSetId)
       );
       ''');
+
+  }
+
+  Future _createStartingCards() async {
+    int setCount = await querySetCount();
+    if (setCount <= 0) {
+      CardSet defaultSet = CardSet(name: "Comp. Science Basics");
+      int setId = await insertCardSet(defaultSet);
+      insertCard(FlashCard(front: "Who is the mascot of Java??", back: '"Duke"', setId: setId), setId);
+      insertCard(FlashCard(front: "What does CRUD stand for??", back: 'create, read, update, delete', setId: setId), setId);
+      insertCard(FlashCard(front: "What is an algorithm?", back: 'A well-defined set of instructions that, when executed in sequence, produces a desired result', setId: setId), setId);
+      insertCard(FlashCard(front: "What is a recursive function?", back: 'A function that calls itself as part of its operation', setId: setId), setId);
+    }
   }
 
   // Helper methods
