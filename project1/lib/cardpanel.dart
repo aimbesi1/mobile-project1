@@ -101,7 +101,7 @@ class _CardPanelState extends State<CardPanel> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Colors.white,
                     ),
                     child: const Text('Edit'),
@@ -117,7 +117,7 @@ class _CardPanelState extends State<CardPanel> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Colors.white,
                     ),
                     child: const Text('Delete'),
@@ -135,7 +135,7 @@ class _CardPanelState extends State<CardPanel> {
                 Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 foregroundColor: Colors.white,
               ),
               child: const Center(
@@ -169,11 +169,11 @@ class _CardPanelState extends State<CardPanel> {
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.onPrimary))))
             : Container(
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.tertiary,
                 child: Center(
                     child: Text(backText,
                         style: TextStyle(
                             color:
-                                Theme.of(context).colorScheme.onSecondary)))));
+                                Theme.of(context).colorScheme.onTertiary)))));
   }
 }

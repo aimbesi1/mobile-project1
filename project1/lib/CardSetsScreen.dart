@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project1/cardset.dart';
 import 'package:project1/cardsview.dart';
 import 'package:project1/main.dart';
+import 'package:project1/settings_screen.dart';
 
 class CardSetsPage extends StatefulWidget {
   @override
@@ -91,7 +92,7 @@ class _CardSetsPageState extends State<CardSetsPage> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Colors.white,
                     ),
                     child: const Text('Edit'),
@@ -107,7 +108,7 @@ class _CardSetsPageState extends State<CardSetsPage> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Colors.white,
                     ),
                     child: const Text('Delete'),
@@ -125,7 +126,7 @@ class _CardSetsPageState extends State<CardSetsPage> {
                 Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 foregroundColor: Colors.white,
               ),
               child: const Center(
@@ -162,7 +163,7 @@ class _CardSetsPageState extends State<CardSetsPage> {
                       Navigator.of(context).pop();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Colors.white,
                     ),
                     child: const Text('Cancel'),
@@ -183,7 +184,7 @@ class _CardSetsPageState extends State<CardSetsPage> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Colors.white,
                     ),
                     child: const Text('Add'),
@@ -208,10 +209,10 @@ class _CardSetsPageState extends State<CardSetsPage> {
             icon: Icon(Icons.settings),
             // Example for clicking the settings button transition
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => SettingsPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
             },
           ),
         ],
@@ -238,7 +239,7 @@ class _CardSetsPageState extends State<CardSetsPage> {
                       );
                     },
                     child: Card(
-                      color: Colors.deepPurple,
+                      color: Theme.of(context).colorScheme.primary,
                       margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
                       child: ListTile(
                         contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
@@ -259,9 +260,9 @@ class _CardSetsPageState extends State<CardSetsPage> {
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
                 height: 100.0,
-                child: const Card(
-                  color: Colors.deepPurple,
-                  child: Center(
+                child: Card(
+                  color: Theme.of(context).colorScheme.primary,
+                  child: const Center(
                     child: Text(
                       'Add a Set',
                       style: TextStyle(
