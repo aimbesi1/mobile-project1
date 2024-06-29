@@ -234,7 +234,7 @@ class _CardSetsPageState extends State<CardSetsPage> {
                       //Transition to cards screen
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CardsView(title: _sets[index].name, setId: _sets[index].id!))
+                        MaterialPageRoute(builder: (context) => CardsView(setName: _sets[index].name, setId: _sets[index].id!))
                       );
                     },
                     child: Card(

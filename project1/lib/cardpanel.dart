@@ -5,9 +5,9 @@ import 'package:project1/main.dart';
 class CardPanel extends StatefulWidget {
   FlashCard card;
   final bool canEdit;
-  final VoidCallback onDelete;
+  final VoidCallback? onDelete;
 
- CardPanel({Key? key, required this.card, required this.onDelete, this.canEdit = true})
+ CardPanel({Key? key, required this.card, this.onDelete, this.canEdit = true})
       : super(key: key ?? ValueKey(card.id));
 
   @override
@@ -50,7 +50,7 @@ class _CardPanelState extends State<CardPanel> {
 
   Future<void> deleteCard() async {
     await dbHelper.deleteCard(widget.card.id!);
-    widget.onDelete();
+    widget.onDelete!();
     // widget.card = await dbHelper.getCard(widget.card.id!);
     setState(() {
       frontFacing = true;

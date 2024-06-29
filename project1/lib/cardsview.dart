@@ -3,12 +3,13 @@ import 'package:project1/database_helper.dart';
 import 'package:project1/cardpanel.dart';
 import 'package:project1/flashcard.dart';
 import 'package:project1/main.dart';
+import 'package:project1/quiz.dart';
 
 
 class CardsView extends StatefulWidget {
-  const CardsView({super.key, required this.title, required this.setId});
+  const CardsView({super.key, required this.setName, required this.setId});
 
-  final String title;
+  final String setName;
   final int setId;
 
   @override
@@ -82,7 +83,7 @@ class _CardsViewState extends State<CardsView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text("View cards: ${widget.setName}"),
       ),
       body: Center(
           child: Column(children: [
@@ -108,21 +109,30 @@ class _CardsViewState extends State<CardsView> {
                 ElevatedButton(
                     onPressed: addCard, child: const Text('Add card')),
                 // ElevatedButton(onPressed: addSet, child: const Text('Add set')),
+                // ElevatedButton(
+                //     onPressed: querySets, child: const Text('Show sets')),
                 ElevatedButton(
-                    onPressed: querySets, child: const Text('Show sets')),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Quiz(title: 'Quiz: ${widget.setName}', cards: _cards))
+                    );
+                  },
+                  child: const Text('Go to Quiz')
+                )
               ],
             )),
-        SizedBox(
-            height: 50,
-            child: Row(
-              children: [
-                ElevatedButton(
-                    onPressed: queryCards,
-                    child: Text('Show cards in set ${widget.setId}')),
-                ElevatedButton(
-                    onPressed: printTables, child: const Text('Show tables')),
-              ],
-            )),
+        // SizedBox(
+        //     height: 50,
+        //     child: Row(
+        //       children: [
+        //         ElevatedButton(
+        //             onPressed: queryCards,
+        //             child: Text('Show cards in set ${widget.setId}')),
+        //         ElevatedButton(
+        //             onPressed: printTables, child: const Text('Show tables')),
+        //       ],
+        //     )),
       ])),
     );
   }
