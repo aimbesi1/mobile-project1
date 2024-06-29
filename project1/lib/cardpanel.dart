@@ -79,6 +79,7 @@ class _CardPanelState extends State<CardPanel> {
 
               //Text Field
               TextField(
+                maxLength: 100,
                 controller: _editTextController,
                 decoration: InputDecoration(
                   hintText: frontFacing ? frontText : backText,
@@ -166,12 +167,14 @@ class _CardPanelState extends State<CardPanel> {
                 color: Theme.of(context).colorScheme.primary,
                 child: Center(
                     child: Text(frontText,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.onPrimary))))
             : Container(
                 color: Theme.of(context).colorScheme.tertiary,
                 child: Center(
                     child: Text(backText,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color:
                                 Theme.of(context).colorScheme.onTertiary)))));

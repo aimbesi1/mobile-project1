@@ -83,7 +83,7 @@ class _CardsViewState extends State<CardsView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("View cards: ${widget.setName}"),
+        title: Text(widget.setName),
       ),
       body: Center(
           child: Column(children: [

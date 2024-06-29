@@ -70,6 +70,7 @@ class _CardSetsPageState extends State<CardSetsPage> {
 
               //Text Field
               TextField(
+                maxLength: 25,
                 controller: _editTextController,
                 decoration: InputDecoration(
                   hintText: _sets[index].name,
@@ -148,6 +149,7 @@ class _CardSetsPageState extends State<CardSetsPage> {
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title: const Text('Enter Set Name', textAlign: TextAlign.center),
             content: TextField(
+              maxLength: 25,
               controller: _editTextController,
               decoration: const InputDecoration(hintText: 'Set Name'),
             ),
