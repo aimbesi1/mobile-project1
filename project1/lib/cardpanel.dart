@@ -72,7 +72,7 @@ class _CardPanelState extends State<CardPanel> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: const Text('Edit or Delete Set', textAlign: TextAlign.center),
+          title: const Text('Edit or Delete Card', textAlign: TextAlign.center),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[

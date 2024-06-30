@@ -20,6 +20,9 @@ class _CardsViewState extends State<CardsView> {
   int _cardCount = 0;
   List<FlashCard> _cards = [];
   TextEditingController _editTextController = TextEditingController();
+  TextEditingController _frontTextController = TextEditingController();
+  TextEditingController _backTextController = TextEditingController();
+
 
   @override
   void initState() {
@@ -37,9 +40,84 @@ class _CardsViewState extends State<CardsView> {
     });
   }
 
-  void addCard() async {
+  void addCardDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text("Enter Card Details", textAlign: TextAlign.center),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: _frontTextController,
+                    decoration: const InputDecoration(
+                      hintText: 'Front Text',
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.all(8.0),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _backTextController,
+                    maxLines: 4,
+                    decoration: const InputDecoration(
+                      hintText: 'Back Text',
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.all(8.0),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    _frontTextController.clear();
+                    _backTextController.clear();
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      String frontText = _frontTextController.text;
+                      String backText = _backTextController.text;
+                      if (frontText.isNotEmpty && backText.isNotEmpty) {
+                        addCard(frontText, backText);
+                      }
+                      _frontTextController.clear();
+                      _backTextController.clear();
+                      Navigator.of(context).pop();
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('Add'),
+                ),
+              ]
+            )
+          ]
+        );
+      },
+    );
+  }
+
+  void addCard(String frontText, String backText) async {
     await dbHelper.insertCard(
-        FlashCard(front: "front text", back: "back text", setId: widget.setId), widget.setId);
+        FlashCard(front: frontText, back: backText, setId: widget.setId), widget.setId);
     await setCardData();
     setState(() {});
   }
@@ -109,16 +187,33 @@ class _CardsViewState extends State<CardsView> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                    onPressed: addCard, child: const Text('Add card')),
+                    onPressed: addCardDialog,
+                    child: const Text('Add card')
+                ),
                 // ElevatedButton(onPressed: addSet, child: const Text('Add set')),
                 // ElevatedButton(
                 //     onPressed: querySets, child: const Text('Show sets')),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Quiz(title: 'Quiz: ${widget.setName}', cards: _cards))
-                    );
+                    if (_cards.isNotEmpty) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Quiz(
+                                    title: 'Quiz: ${widget.setName}',
+                                    cards: _cards,
+                                  )
+                          )
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Please add cards to the set before starting the quiz."),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
                   },
                   child: const Text('Go to Quiz')
                 )
