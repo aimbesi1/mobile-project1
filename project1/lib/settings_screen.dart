@@ -28,7 +28,7 @@ class SettingsScreen extends StatelessWidget {
     return ListTile(
       title: Text(
         title,
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: color == Colors.yellow ? Colors.black : Colors.white),
       ),
       tileColor: color,
       onTap: () {

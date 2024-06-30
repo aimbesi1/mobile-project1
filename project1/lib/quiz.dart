@@ -70,9 +70,11 @@ class _QuizState extends State<Quiz> {
                 height: 400,
                 padding: const EdgeInsets.all(8.0),
                 child: currentPanel)),
-        SizedBox(
-            height: 50,
+        Container(
+            color: Theme.of(context).colorScheme.inversePrimary,
+            height: 80,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 // ElevatedButton(onPressed: addSet, child: const Text('Add set')),
                 ElevatedButton(

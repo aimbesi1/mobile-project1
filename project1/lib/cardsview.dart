@@ -102,9 +102,11 @@ class _CardsViewState extends State<CardsView> {
                     );
               })),
         ),
-        SizedBox(
-            height: 50,
+        Container(
+            color: Theme.of(context).colorScheme.inversePrimary,
+            height: 80,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
                     onPressed: addCard, child: const Text('Add card')),
