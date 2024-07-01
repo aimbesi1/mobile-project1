@@ -12,7 +12,7 @@ class SettingsScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          _buildThemeTile(context, 'Purple Theme', Colors.purple),
+          _buildThemeTile(context, 'Purple Theme', Colors.deepPurple),
           _buildThemeTile(context, 'Blue Theme', Colors.blue),
           _buildThemeTile(context, 'Green Theme', Colors.green),
           _buildThemeTile(context, 'Red Theme', Colors.red),
