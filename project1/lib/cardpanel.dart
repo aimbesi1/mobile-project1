@@ -5,9 +5,9 @@ import 'package:project1/main.dart';
 class CardPanel extends StatefulWidget {
   FlashCard card;
   final bool canEdit;
-  final VoidCallback onDelete;
+  final VoidCallback? onDelete;
 
- CardPanel({Key? key, required this.card, required this.onDelete, this.canEdit = true})
+ CardPanel({Key? key, required this.card, this.onDelete, this.canEdit = true})
       : super(key: key ?? ValueKey(card.id));
 
   @override
@@ -50,7 +50,7 @@ class _CardPanelState extends State<CardPanel> {
 
   Future<void> deleteCard() async {
     await dbHelper.deleteCard(widget.card.id!);
-    widget.onDelete();
+    widget.onDelete!();
     // widget.card = await dbHelper.getCard(widget.card.id!);
     setState(() {
       frontFacing = true;
@@ -79,6 +79,7 @@ class _CardPanelState extends State<CardPanel> {
 
               //Text Field
               TextField(
+                maxLength: 100,
                 controller: _editTextController,
                 decoration: InputDecoration(
                   hintText: frontFacing ? frontText : backText,
@@ -101,7 +102,7 @@ class _CardPanelState extends State<CardPanel> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Colors.white,
                     ),
                     child: const Text('Edit'),
@@ -117,7 +118,7 @@ class _CardPanelState extends State<CardPanel> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Colors.white,
                     ),
                     child: const Text('Delete'),
@@ -135,7 +136,7 @@ class _CardPanelState extends State<CardPanel> {
                 Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 foregroundColor: Colors.white,
               ),
               child: const Center(
@@ -166,14 +167,16 @@ class _CardPanelState extends State<CardPanel> {
                 color: Theme.of(context).colorScheme.primary,
                 child: Center(
                     child: Text(frontText,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.onPrimary))))
             : Container(
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.tertiary,
                 child: Center(
                     child: Text(backText,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color:
-                                Theme.of(context).colorScheme.onSecondary)))));
+                                Theme.of(context).colorScheme.onTertiary)))));
   }
 }

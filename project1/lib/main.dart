@@ -6,6 +6,7 @@ import 'package:project1/database_helper.dart';
 import 'package:project1/cardpanel.dart';
 import 'package:project1/flashcard.dart';
 import 'package:project1/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 final dbHelper = DatabaseHelper();
 

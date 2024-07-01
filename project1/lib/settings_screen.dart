@@ -28,7 +28,11 @@ class SettingsScreen extends StatelessWidget {
     return ListTile(
       title: Text(
         title,
+<<<<<<< HEAD
         style: TextStyle(color: Colors.white),
+=======
+        style: TextStyle(color: color == Colors.yellow ? Colors.black : Colors.white),
+>>>>>>> 2a81a5cd64abb8cfe88f6972e14650a902434d23
       ),
       tileColor: color,
       onTap: () {
@@ -41,4 +45,8 @@ class SettingsScreen extends StatelessWidget {
       },
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 2a81a5cd64abb8cfe88f6972e14650a902434d23
