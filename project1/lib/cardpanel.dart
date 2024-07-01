@@ -80,10 +80,10 @@ class _CardPanelState extends State<CardPanel> {
               //Text Field
               TextField(
                 maxLength: 100,
-                controller: _editTextController,
-                decoration: InputDecoration(
-                  hintText: frontFacing ? frontText : backText,
-                ),
+                controller: _editTextController..text = frontFacing ? frontText : backText,
+                // decoration: InputDecoration(
+                //   hintText: frontFacing ? frontText : backText,
+                // ),
               ),
 
               ButtonBar(

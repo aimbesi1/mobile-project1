@@ -71,10 +71,10 @@ class _CardSetsPageState extends State<CardSetsPage> {
               //Text Field
               TextField(
                 maxLength: 25,
-                controller: _editTextController,
-                decoration: InputDecoration(
-                  hintText: _sets[index].name,
-                ),
+                controller: _editTextController..text =_sets[index].name,
+                // decoration: InputDecoration(
+                //   hintText: _sets[index].name,
+                // ),
               ),
 
               ButtonBar(
