@@ -7,6 +7,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text('Settings'),
       ),
       body: ListView(
@@ -21,6 +22,7 @@ class SettingsScreen extends StatelessWidget {
           _buildThemeTile(context, 'Teal Theme', Colors.teal),
         ],
       ),
+      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
     );
   }
 
