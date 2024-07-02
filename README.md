@@ -15,3 +15,7 @@ This is a basic flash card app that lets you manage collections of flash cards, 
 - Go to the sdcard/Downloads directory
 - Place app-release.apk in the sdcard/Downloads directory
 - Enjoy
+
+**WATCH THE VIDEO**
+
+https://www.youtube.com/watch?v=i2CWxVyHsrA
